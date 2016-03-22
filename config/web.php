@@ -58,16 +58,7 @@ $config = [
           'useFileTransport' => FALSE,
           'transport' => $mail['mail'],
           ], */
-        'postman' => [
-            'class' => 'rmrevin\yii\postman\Component',
-            'driver' => 'smtp',
-            'default_from' => ['mailer@somehost.com', 'Mailer'],
-            'subject_prefix' => 'Sitename / ',
-            'subject_suffix' => null,
-            'table' => '{{%postman_letter}}',
-            'view_path' => '/email',
-            'smtp_config' => $mail['postman'],
-        ],
+        
         // 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

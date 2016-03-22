@@ -114,7 +114,7 @@ return [ 'mail' => [
     //   'encryption' => 'tls', // It is often used, check your provider or mail server specs
     ],
     'postman' => [
-        'host' => 'mail.vgok.ru',
+        'host' => '',
         'port' => 25,
         'auth' => true,
         'user' => '',
@@ -127,5 +127,10 @@ return [ 'mail' => [
 
 ###
 ```php
-php yii migrate --migrationPath=@vendor/amnah/yii2-user/migrations
+composer global require "fxp/composer-asset-plugin:~1.1.1"
+composer update --prefer-dist
+
+создать базу itmh
+
+yii migrate\up
 ```

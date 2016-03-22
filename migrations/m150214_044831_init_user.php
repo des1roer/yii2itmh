@@ -5,10 +5,12 @@ use yii\db\Migration;
 
 class m150214_044831_init_user extends Migration
 {
+
     public function safeUp()
     {
         $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
+        if ($this->db->driverName === 'mysql')
+        {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
@@ -19,7 +21,7 @@ class m150214_044831_init_user extends Migration
             'created_at' => Schema::TYPE_TIMESTAMP . ' null',
             'updated_at' => Schema::TYPE_TIMESTAMP . ' null',
             'can_admin' => Schema::TYPE_SMALLINT . ' not null default 0',
-        ], $tableOptions);
+                ], $tableOptions);
         $this->createTable('{{%user}}', [
             'id' => Schema::TYPE_PK,
             'role_id' => Schema::TYPE_INTEGER . ' not null',
@@ -36,7 +38,7 @@ class m150214_044831_init_user extends Migration
             'updated_at' => Schema::TYPE_TIMESTAMP . ' null',
             'banned_at' => Schema::TYPE_TIMESTAMP . ' null',
             'banned_reason' => Schema::TYPE_STRING . ' null',
-        ], $tableOptions);
+                ], $tableOptions);
         $this->createTable('{{%user_token}}', [
             'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . ' null',
@@ -45,7 +47,7 @@ class m150214_044831_init_user extends Migration
             'data' => Schema::TYPE_STRING . ' null',
             'created_at' => Schema::TYPE_TIMESTAMP . ' null',
             'expired_at' => Schema::TYPE_TIMESTAMP . ' null',
-        ], $tableOptions);
+                ], $tableOptions);
         $this->createTable('{{%profile}}', [
             'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . ' not null',
@@ -53,7 +55,7 @@ class m150214_044831_init_user extends Migration
             'updated_at' => Schema::TYPE_TIMESTAMP . ' null',
             'full_name' => Schema::TYPE_STRING . ' null',
             'timezone' => Schema::TYPE_STRING . ' null',
-        ], $tableOptions);
+                ], $tableOptions);
         $this->createTable('{{%user_auth}}', [
             'id' => Schema::TYPE_PK,
             'user_id' => Schema::TYPE_INTEGER . ' not null',
@@ -62,7 +64,7 @@ class m150214_044831_init_user extends Migration
             'provider_attributes' => Schema::TYPE_TEXT . ' not null',
             'created_at' => Schema::TYPE_TIMESTAMP . ' null',
             'updated_at' => Schema::TYPE_TIMESTAMP . ' null'
-        ], $tableOptions);
+                ], $tableOptions);
 
         // add indexes for performance optimization
         $this->createIndex('{{%user_email}}', '{{%user}}', 'email', true);
@@ -87,11 +89,21 @@ class m150214_044831_init_user extends Migration
         $security = Yii::$app->security;
         $columns = ['role_id', 'email', 'username', 'password', 'status', 'created_at', 'access_token', 'auth_key'];
         $this->batchInsert('{{%user}}', $columns, [
-            [
+            /*[
                 1, // Role::ROLE_ADMIN
                 'neo@neo.com',
                 'neo',
                 '$2y$13$dyVw4WkZGkABf2UrGWrhHO4ZmVBv.K4puhOL59Y9jQhIdj63TlV.O', // neo
+                1, // User::STATUS_ACTIVE
+                gmdate('Y-m-d H:i:s'),
+                $security->generateRandomString(),
+                $security->generateRandomString(),
+            ],*/
+            [
+                1, // Role::ROLE_ADMIN
+                'no@mail.ru',
+                'admin',
+                '$2y$13$d1jP7AvGG9TtdSEsS3NpJO4ccn99d/6ItIiAcUbfRA5OMAszdY3A.', // root
                 1, // User::STATUS_ACTIVE
                 gmdate('Y-m-d H:i:s'),
                 $security->generateRandomString(),
@@ -115,4 +127,5 @@ class m150214_044831_init_user extends Migration
         $this->dropTable('{{%user}}');
         $this->dropTable('{{%role}}');
     }
+
 }
