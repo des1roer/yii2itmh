@@ -11,7 +11,6 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 // include composer autoload
 //use yii\helpers\Html;
-
 // import the Intervention Image Manager Class
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -21,7 +20,8 @@ Image::configure(array('driver' => 'imagick'));
 /**
  * VideoController implements the CRUD actions for Video model.
  */
-class VideoController extends Controller {
+class VideoController extends Controller
+{
 
     public function behaviors()
     {
@@ -74,9 +74,10 @@ class VideoController extends Controller {
         if ($model->load(Yii::$app->request->post()))
         {
             $file = UploadedFile::getInstance($model, 'origin_img');
-            if ($model->premiere) $model->premiere = date('Y-m-d', strtotime($model->premiere));
+            if ($model->premiere)
+                $model->premiere = date('Y-m-d', strtotime($model->premiere));
 
-            if (isset($file))
+            if (!empty($file))
             {
                 $filename = uniqid() . '.' . $file->extension;
                 $path = 'uploads/' . $filename;
@@ -84,21 +85,21 @@ class VideoController extends Controller {
                 if ($file->saveAs($path))
                 {
                     $model->origin_img = $filename;
-                    $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
-                    $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(150, 248)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'big_'. $filename);
-              
+                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(100, 145)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'small_' . $filename);
+                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(150, 248)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'big_' . $filename);
 
-                  $model->small_img = 'uploads/small_' . $filename;
-                  $model->big_img = 'uploads/big_' . $filename;
+
+                    $model->small_img = 'uploads/small_' . $filename;
+                    $model->big_img = 'uploads/big_' . $filename;
                 }
             }
             if ($model->save())
             {
-                return $this->goBack();
-                 //return  $this->redirect(Yii::$app->request->referrer);
-               // return $this->redirect('index');
-            }
+                return $this->redirect(['index']);
+            } else
+                echo 'alert';
         }
+
         else
         {
             return $this->render('create', [
@@ -122,7 +123,9 @@ class VideoController extends Controller {
 
         if ($model->load(Yii::$app->request->post()))
         {
-            if ($model->premiere) $model->premiere = date('Y-m-d', strtotime($model->premiere));
+            if ($model->premiere)
+                $model->premiere = date('Y-m-d', strtotime($model->premiere));
+            
             $file = UploadedFile::getInstance($model, 'origin_img');
             if (isset($file))
             {
@@ -134,16 +137,14 @@ class VideoController extends Controller {
                 {
                     $model->origin_img = $filename;
                 }
-            }
-            else
+            } else            
                 $model->origin_img = $oldFileName;
-
+           
             if ($model->save())
             {
                 return $this->redirect(['index']);
             }
-        }
-        else
+        } else
         {
             return $this->render('update', [
                         'model' => $model,
@@ -178,8 +179,7 @@ class VideoController extends Controller {
         if (($model = Video::findOne($id)) !== null)
         {
             return $model;
-        }
-        else
+        } else
         {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

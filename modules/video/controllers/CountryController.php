@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class CountryController extends Controller
 {
+
     public function behaviors()
     {
         return [
@@ -36,8 +37,8 @@ class CountryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,7 +50,7 @@ class CountryController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -61,12 +62,16 @@ class CountryController extends Controller
     public function actionCreate()
     {
         $model = new Country();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        //echo '<pre>';
+        //var_dump($this);
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
+            return $this->redirect(['index']);
+        } 
+        else
+        {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -81,11 +86,13 @@ class CountryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        } else
+        {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -112,10 +119,14 @@ class CountryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Country::findOne($id)) !== null) {
+        if (($model = Country::findOne($id)) !== null)
+        {
             return $model;
-        } else {
+        } 
+        else
+        {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
