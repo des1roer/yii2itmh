@@ -89,6 +89,7 @@ class Video extends \yii\db\ActiveRecord {
     public function behaviors()
     {
         return [
+
             [
                 'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
                 'relations' => [
@@ -105,15 +106,15 @@ class Video extends \yii\db\ActiveRecord {
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'origin_name' => 'Origin Name',
+            'name' => 'Название',
+            'origin_name' => 'Оригинальное название ',
             'country_id' => 'Страна',
-            'year_start' => 'Year Start',
+            'year_start' => 'Даты создания',
             'year_end' => 'Year End',
-            'duration' => 'Duration',
-            'premiere' => 'Premiere',
-            'preview' => 'Preview',
-            'description' => 'Description',
+            'duration' => 'Продолжительность (секунды)',
+            'premiere' => 'Премьера',
+            'preview' => 'Анонс',
+            'description' => 'Описание',
             'origin_img' => 'Афиша',
             'small_img' => 'small_img',
             'big_img' => 'big_img',
@@ -152,6 +153,12 @@ class Video extends \yii\db\ActiveRecord {
     public function getVideoHasGenres()
     {
         return $this->hasMany(VideoHasGenre::className(), ['video_id' => 'id']);
+    }
+
+    public function afterFind()
+    {
+        if ($this->premiere)
+            $this->premiere = date('d.m.Y', strtotime($this->premiere));
     }
 
 }

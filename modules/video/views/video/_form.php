@@ -5,7 +5,9 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\modules\video\models\Director;
 use app\modules\video\models\Country;
-
+use dosamigos\datepicker\DatePicker;
+use dosamigos\datepicker\DateRangePicker;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\modules\video\models\Video */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,12 +21,22 @@ use app\modules\video\models\Country;
 
     <?= $form->field($model, 'origin_name')->textInput(['maxlength' => true]) ?>
 
-
+    <label class="control-label" for="year_start">Страна</label>
     <?= Html::activeDropDownList($model, 'country_id', ArrayHelper::map(Country::find()->all(), 'id', 'name'), ['prompt' => 'Select...']) ?>
-    <?= $form->field($model, 'year_start')->textInput() ?>
 
-    <?= $form->field($model, 'year_end')->textInput() ?>
-
+    <?=
+    $form->field($model, 'year_start')->widget(DateRangePicker::className(), [
+        'attributeTo' => 'year_end',
+        'form' => $form, // best for correct client validation
+        'language' => 'ru',
+        // 'size' => 'lg',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy',
+            'minViewMode' => 2,
+        ]
+    ]);
+    ?>
     <?=
             $form->field($model, 'director_list')
             ->dropDownList(ArrayHelper::map(Director::find()->all(), 'id', 'name'), ['multiple' => true])
@@ -32,11 +44,36 @@ use app\modules\video\models\Country;
 
     <?= $form->field($model, 'duration')->textInput() ?>
 
-    <?= $form->field($model, 'premiere')->textInput() ?>
 
-    <?= $form->field($model, 'preview')->textInput(['maxlength' => true]) ?>
+    <?php /*
+      DatePicker::widget([
+      'model' => $model,
+      'attribute' => 'premiere',
+      'template' => '{addon}{input}',
+      'clientOptions' => [
+      'autoclose' => true,
+      'format' => 'dd-M-yyyy'
+      ]
+      ]); */
+    ?>
+    <?php echo Yii::$app->urlManager->createAbsoluteUrl('uploads').'/';  echo 232;?>
+    <?=
+    $form->field($model, 'premiere')->widget(
+            DatePicker::className(), [
+        // inline too, not bad                
+        'inline' => TRUE,
+        'language' => 'ru',
+        // modify template for custom rendering
+        'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'dd.mm.yyyy'
+        ]
+    ]);
+    ?>
+    <?= $form->field($model, 'preview')->textArea(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'description')->textArea(['rows' => 6, 'maxlength' => true]) ?>
 
     <?= $form->field($model, 'origin_img')->fileInput() ?>
     <?php echo ($model->origin_img) ? Html::img('/uploads/' . $model->origin_img, ['width' => 100, 'height' => 100]) : null ?>

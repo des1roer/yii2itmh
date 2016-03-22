@@ -3,7 +3,7 @@
 namespace app\modules\video\models;
 
 use Yii;
-
+use yii\helpers\Html;
 /**
  * This is the model class for table "director".
  *
@@ -12,8 +12,8 @@ use Yii;
  *
  * @property DirectorHasVideo[] $directorHasVideos
  */
-class Director extends \yii\db\ActiveRecord
-{
+class Director extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
@@ -30,7 +30,38 @@ class Director extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['name'], 'unique']
+            [['name'], 'unique'],
+            [['video_list'], 'safe'],
+        ];
+    }
+
+    public function getVideo_url()
+    {
+        $videos = $this->videos;
+        for ($i = 0; $i <= count($videos); $i++)
+        {
+            if (!empty($videos[$i]['name']))
+                $video[] = Html::a($videos[$i]['name'], ['/video/video/view', 'id' => $videos[$i]['id'],], ['class' => 'btn btn-link']);
+        }
+        return ($video) ? implode($video) : '';
+    }
+
+    public function getVideos()
+    {
+        return $this->hasMany(Video::className(), ['id' => 'video_id'])
+                        ->viaTable('director_has_video', ['director_id' => 'id']);
+    }
+
+    public function behaviors()
+    {
+        return [
+
+            [
+                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
+                'relations' => [
+                    'video_list' => 'videos',
+                ],
+            ],
         ];
     }
 
@@ -40,8 +71,8 @@ class Director extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Имя',
+            'video_list' => 'Фильмы',
         ];
     }
 
@@ -52,4 +83,5 @@ class Director extends \yii\db\ActiveRecord
     {
         return $this->hasMany(DirectorHasVideo::className(), ['director_id' => 'id']);
     }
+
 }

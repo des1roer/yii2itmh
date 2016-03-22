@@ -12,17 +12,21 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'amnah\yii2\user\Module',
-            //'emailConfirmation' => false,
+        //'emailConfirmation' => false,
         // set custom module properties here ...
         ],
         'video' => [
             'class' => 'app\modules\video\Module',
         ],
     ],
-    'components' => [
+    'components' => [       
         'request' => [
 // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'S51X9l62nn_24iz05aB1p3Gf4Ml5q2dx',
+        ],
+        'image' =>
+        [
+            'class' => 'intervention\image\src\Intervention\Image\ImageManagerStatic',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -30,10 +34,10 @@ $config = [
         'user' => [
             'class' => 'amnah\yii2\user\components\User',
         ],
-        /*'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],*/
+        /* 'user' => [
+          'identityClass' => 'app\models\User',
+          'enableAutoLogin' => true,
+          ], */
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

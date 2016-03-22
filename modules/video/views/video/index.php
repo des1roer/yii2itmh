@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use app\modules\video\models\Director;
 use app\modules\video\models\Country;
 use yii\widgets\Pjax;
-
+use app\helpers\ImageResizeHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\video\models\VideoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -39,6 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($data->imageurl, ['width' => '100']);
                 },
                     ],
+                         [
+                'attribute' => 'origin_img',
+                'format' => 'html',
+                'value' => function($data) {
+                    return Html::img(ImageResizeHelper::init()->image($data->imageurl)->fit(500, 500)); //crop(500, 500));//Html::img($data->imageurl, ['width' => '100']);
+                },
+                    ],
                     [
                         'attribute' => 'country_id',
                         'format' => 'raw',
@@ -46,7 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'filter' => ArrayHelper::map(Country::find()->all(), 'id', 'name'),
                         'value' => 'country.name'
                     ],
-                    'year_start',
+                    [
+                        'format' => 'raw',
+                        'attribute' => 'year_start',
+                        'value' => function($data) {
+                            return $data->year_start . ' - ' . $data->year_end;
+                        },
+                    ],
                     [
                         'format' => 'raw',
                         'attribute' => 'director_list',
@@ -56,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     // 'year_end',
                     // 'duration',
-                    // 'premiere',
+                    'premiere',
                     // 'preview',
                     // 'description',
                     // 'origin_img',
