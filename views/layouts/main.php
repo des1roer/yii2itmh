@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -14,15 +13,15 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+    </head>
+    <body>
+        <?php $this->beginBody() ?>
 
         <div class="wrap">
             <?php
@@ -60,10 +59,12 @@ AppAsset::register($this);
                             ['label' => 'Аккаунты', 'url' => ['/user/settings/account']],
                             ['label' => 'gii', 'url' => ['/gii']],
                         ], 'visible' => $isAdmin], // check if user is an admin 
-                          ['label' => 'video', 'items' => [
-                            ['label' => 'video', 'url' => ['/video/admin']],
-                            ['label' => 'Аккаунты', 'url' => ['/user/settings/account']],
-                            ['label' => 'gii', 'url' => ['/gii']],
+                    ['label' => 'Video', 'items' => [
+                            ['label' => 'video', 'url' => ['/video/video']],
+                            ['label' => 'country', 'url' => ['/video/country']],
+                            ['label' => 'actor', 'url' => ['/video/actor']],
+                            ['label' => 'director', 'url' => ['/video/director']],
+                            ['label' => 'genre', 'url' => ['/video/genre']],
                         ], 'visible' => $isAdmin], // check if user is an admin 
                     Yii::$app->user->isGuest ?
                             ['label' => 'Login', 'url' => ['/user/login']] : // or ['/user/login-email']
@@ -75,23 +76,25 @@ AppAsset::register($this);
             NavBar::end();
             ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
-    </div>
-</div>
+            <div class="container">
+            <?=
+            Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ])
+            ?>
+                <?= $content ?>
+            </div>
+        </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+                <p class="pull-right"><?= Yii::powered() ?></p>
+            </div>
+        </footer>
 
 <?php $this->endBody() ?>
-</body>
+    </body>
 </html>
 <?php $this->endPage() ?>

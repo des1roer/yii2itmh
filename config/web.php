@@ -12,7 +12,7 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'amnah\yii2\user\Module',
-            'emailConfirmation' => false,
+            //'emailConfirmation' => false,
         // set custom module properties here ...
         ],
         'video' => [
@@ -30,10 +30,10 @@ $config = [
         'user' => [
             'class' => 'amnah\yii2\user\components\User',
         ],
-        'user' => [
+        /*'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-        ],
+        ],*/
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -75,14 +75,18 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
-            'enablePrettyUrl' => true,
+            'class' => 'yii\web\UrlManager',
+            // Disable index.php
             'showScriptName' => false,
-            'rules' => [
-            ],
+            // Disable r= routes
+            'enablePrettyUrl' => true,
+            'rules' => array(
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ),
         ],
-        */
     ],
     'params' => $params,
 ];

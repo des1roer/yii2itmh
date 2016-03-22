@@ -102,9 +102,9 @@ return [
 - Refer to the README in the `tests` directory for information specific to basic application tests.
 
 ### \yii2itmh\config\local_mail.php
+```php
 
 <?php
-
 return [ 'mail' => [
         'class' => 'Swift_SmtpTransport',
         'host' => '****', // e.g. smtp.mandrillapp.com or smtp.gmail.com
@@ -123,3 +123,9 @@ return [ 'mail' => [
         'debug' => true,
     ],
 ];
+```
+
+###
+```php
+php yii migrate --migrationPath=@vendor/amnah/yii2-user/migrations
+```

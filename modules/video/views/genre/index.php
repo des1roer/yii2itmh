@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\video\models\CountrySearch */
+/* @var $searchModel app\modules\video\models\GenreSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Countries';
+$this->title = 'Genres';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="country-index">
+<div class="genre-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Country', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Genre', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
+            'id',
             'name',
 
             ['class' => 'yii\grid\ActionColumn'],

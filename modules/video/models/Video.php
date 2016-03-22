@@ -3,6 +3,7 @@
 namespace app\modules\video\models;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "video".
@@ -27,14 +28,19 @@ use Yii;
  * @property Country $country
  * @property VideoHasGenre[] $videoHasGenres
  */
-class Video extends \yii\db\ActiveRecord
-{
+class Video extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return 'video';
+    }
+
+    public function formName()
+    {
+        return '';
     }
 
     /**
@@ -46,12 +52,49 @@ class Video extends \yii\db\ActiveRecord
             [['name', 'origin_name'], 'required'],
             [['country_id', 'year_start', 'year_end', 'duration', 'uploader'], 'integer'],
             [['premiere'], 'safe'],
-            [['name', 'origin_name', 'preview', 'description', 'origin_img', '100x145_img', '150x218_img'], 'string', 'max' => 255],
+            [['name', 'origin_name', 'preview', 'description'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['origin_name'], 'unique'],
             [['origin_img'], 'unique'],
-            [['100x145_img'], 'unique'],
-            [['150x218_img'], 'unique']
+            [['small_img'], 'unique'],
+            [['big_img'], 'unique'],
+            [['director_list'], 'safe'],
+            [['origin_img', 'big_img', 'small_img'], 'file'],
+        ];
+    }
+
+    public function getImageurl()
+    {
+        // return your image url here
+        return \Yii::$app->request->BaseUrl . '/uploads/' . $this->origin_img;
+    }
+
+    public function getDirectors_url()
+    {
+        $directors = $this->directors;
+        for ($i = 0; $i <= count($directors); $i++)
+        {
+            if (!empty($directors[$i]['name']))
+                $director[] = Html::a($directors[$i]['name'], ['/video/director/view', 'id' => $directors[$i]['id'],], ['class' => 'btn btn-link']);
+        }
+        return ($director) ? implode($director) : '';
+    }
+
+    public function getDirectors()
+    {
+        return $this->hasMany(Director::className(), ['id' => 'director_id'])
+                        ->viaTable('director_has_video', ['video_id' => 'id']);
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
+                'relations' => [
+                    'director_list' => 'directors',
+                ],
+            ],
         ];
     }
 
@@ -64,17 +107,18 @@ class Video extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'origin_name' => 'Origin Name',
-            'country_id' => 'Country ID',
+            'country_id' => 'Страна',
             'year_start' => 'Year Start',
             'year_end' => 'Year End',
             'duration' => 'Duration',
             'premiere' => 'Premiere',
             'preview' => 'Preview',
             'description' => 'Description',
-            'origin_img' => 'Origin Img',
-            '100x145_img' => '100x145 Img',
-            '150x218_img' => '150x218 Img',
+            'origin_img' => 'Афиша',
+            'small_img' => 'small_img',
+            'big_img' => 'big_img',
             'uploader' => 'Uploader',
+            'director_list' => 'Режиссёр',
         ];
     }
 
@@ -109,4 +153,5 @@ class Video extends \yii\db\ActiveRecord
     {
         return $this->hasMany(VideoHasGenre::className(), ['video_id' => 'id']);
     }
+
 }
