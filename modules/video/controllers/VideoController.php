@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 // include composer autoload
-use yii\helpers\Html;
+//use yii\helpers\Html;
 
 // import the Intervention Image Manager Class
 use Intervention\Image\ImageManagerStatic as Image;
@@ -74,7 +74,7 @@ class VideoController extends Controller {
         if ($model->load(Yii::$app->request->post()))
         {
             $file = UploadedFile::getInstance($model, 'origin_img');
-            $model->premiere = date('Y-m-d', strtotime($model->premiere));
+            if ($model->premiere) $model->premiere = date('Y-m-d', strtotime($model->premiere));
 
             if (isset($file))
             {
@@ -84,16 +84,19 @@ class VideoController extends Controller {
                 if ($file->saveAs($path))
                 {
                     $model->origin_img = $filename;
-                       $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
-                      // $img = Image::make($path)->resize(150, 218)->insert('uploads/big_' . $filename);
+                    $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
+                    $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(150, 248)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'big_'. $filename);
+              
 
-                    $model->small_img = 'uploads/small_' . $filename;
-                    $model->big_img = 'uploads/big_' . $filename;
+                  $model->small_img = 'uploads/small_' . $filename;
+                  $model->big_img = 'uploads/big_' . $filename;
                 }
             }
             if ($model->save())
             {
-                return $this->redirect('index');
+                return $this->goBack();
+                 //return  $this->redirect(Yii::$app->request->referrer);
+               // return $this->redirect('index');
             }
         }
         else
@@ -119,7 +122,7 @@ class VideoController extends Controller {
 
         if ($model->load(Yii::$app->request->post()))
         {
-            $model->premiere = date('Y-m-d', strtotime($model->premiere));
+            if ($model->premiere) $model->premiere = date('Y-m-d', strtotime($model->premiere));
             $file = UploadedFile::getInstance($model, 'origin_img');
             if (isset($file))
             {

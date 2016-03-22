@@ -101,29 +101,6 @@ return [
 - Check and edit the other files in the `config/` directory to customize your application as required.
 - Refer to the README in the `tests` directory for information specific to basic application tests.
 
-### \yii2itmh\config\local_mail.php
-```php
-
-<?php
-return [ 'mail' => [
-        'class' => 'Swift_SmtpTransport',
-        'host' => '****', // e.g. smtp.mandrillapp.com or smtp.gmail.com
-        'username' => '',
-        'password' => '',
-        'port' => 25, // Port 25 is a very common port too
-    //   'encryption' => 'tls', // It is often used, check your provider or mail server specs
-    ],
-    'postman' => [
-        'host' => '',
-        'port' => 25,
-        'auth' => true,
-        'user' => '',
-        'password' => '',
-        'secure' => 'ssl',
-        'debug' => true,
-    ],
-];
-```
 
 ###
 ```php

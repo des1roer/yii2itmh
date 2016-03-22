@@ -8,6 +8,7 @@ use app\modules\video\models\Country;
 use dosamigos\datepicker\DatePicker;
 use dosamigos\datepicker\DateRangePicker;
 use yii\helpers\Url;
+use Intervention\Image\ImageManagerStatic as Image;
 /* @var $this yii\web\View */
 /* @var $model app\modules\video\models\Video */
 /* @var $form yii\widgets\ActiveForm */
@@ -55,16 +56,19 @@ use yii\helpers\Url;
       'format' => 'dd-M-yyyy'
       ]
       ]); */
+   // $filename = '56f120b65cd28.png';
+    //  $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
+           //         echo Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.'56f120b65cd28.png';  
     ?>
     <?php echo Yii::$app->urlManager->createAbsoluteUrl('uploads').'/';  echo 232;?>
     <?=
     $form->field($model, 'premiere')->widget(
             DatePicker::className(), [
         // inline too, not bad                
-        'inline' => TRUE,
+        //'inline' => TRUE,
         'language' => 'ru',
         // modify template for custom rendering
-        'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
         'clientOptions' => [
             'autoclose' => true,
             'format' => 'dd.mm.yyyy'

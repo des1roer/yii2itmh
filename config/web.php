@@ -12,7 +12,7 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'amnah\yii2\user\Module',
-        //'emailConfirmation' => false,
+       
         // set custom module properties here ...
         ],
         'video' => [

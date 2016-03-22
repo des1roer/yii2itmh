@@ -21,9 +21,9 @@ class m160321_081027_create_video extends Migration {
             'premiere' => $this->dateTime(),
             'preview' => $this->string(255),
             'description' => $this->string(255),
-            'origin_img' => $this->string(255)->unique(),
-            'small_img' => $this->string(255)->unique(),
-            'big_img' => $this->string(255)->unique(),
+            'origin_img' => $this->string(255),
+            'small_img' => $this->string(255),
+            'big_img' => $this->string(255),
             'uploader' => $this->integer(),
         ]);
         $this->createIndex('idx-country_id', 'video', 'country_id');

@@ -38,11 +38,6 @@ class Video extends \yii\db\ActiveRecord {
         return 'video';
     }
 
-    public function formName()
-    {
-        return '';
-    }
-
     /**
      * @inheritdoc
      */
@@ -66,7 +61,7 @@ class Video extends \yii\db\ActiveRecord {
     public function getImageurl()
     {
         // return your image url here
-        return \Yii::$app->request->BaseUrl . '/uploads/' . $this->origin_img;
+        return \Yii::$app->request->BaseUrl . '/uploads/small_' . $this->origin_img;
     }
 
     public function getDirectors_url()
