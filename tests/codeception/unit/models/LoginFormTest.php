@@ -17,7 +17,7 @@ class LoginFormTest extends TestCase
         parent::tearDown();
     }
 
-    public function testLoginNoUser()
+   /* public function testLoginNoUser()
     {
         $model = new LoginForm([
             'username' => 'not_existing_username',
@@ -28,9 +28,9 @@ class LoginFormTest extends TestCase
             expect('model should not login user', $model->login())->false();
             expect('user should not be logged in', Yii::$app->user->isGuest)->true();
         });
-    }
+    }*/
 
-    public function testLoginWrongPassword()
+   /* public function testLoginWrongPassword()
     {
         $model = new LoginForm([
             'username' => 'demo',
@@ -42,9 +42,9 @@ class LoginFormTest extends TestCase
             expect('error message should be set', $model->errors)->hasKey('password');
             expect('user should not be logged in', Yii::$app->user->isGuest)->true();
         });
-    }
+    }*/
 
-    public function testLoginCorrect()
+ /*   public function testLoginCorrect()
     {
         $model = new LoginForm([
             'username' => 'demo',
@@ -56,6 +56,6 @@ class LoginFormTest extends TestCase
             expect('error message should not be set', $model->errors)->hasntKey('password');
             expect('user should be logged in', Yii::$app->user->isGuest)->false();
         });
-    }
+    }*/
 
 }
