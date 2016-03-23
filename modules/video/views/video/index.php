@@ -7,6 +7,7 @@ use app\modules\video\models\Director;
 use app\modules\video\models\Country;
 use yii\widgets\Pjax;
 use app\helpers\ImageResizeHelper;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\video\models\VideoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="video-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
+<?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
 
     <p>
-        <?= Html::a('Create Video', ['create'], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Create Video', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php Pjax::begin(['enablePushState' => false]) ?>
     <?=
@@ -36,49 +37,56 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'origin_img',
                 'format' => 'html',
                 'value' => function($data) {
-                    return Html::img($data->imageurl, ['width' => '100']);
-                },
-                    ],
-                         [
-                'attribute' => 'origin_img',
-                'format' => 'html',
-                'value' => function($data) {
-                    return Html::img(ImageResizeHelper::init()->image($data->imageurl)->fit(500, 500)); //crop(500, 500));//Html::img($data->imageurl, ['width' => '100']);
+                    return Html::img($data->getImageurl($data->origin_img), ['width' => '100']);
                 },
                     ],
                     [
-                        'attribute' => 'country_id',
-                        'format' => 'raw',
-                        // 'label' => 'раса',
-                        'filter' => ArrayHelper::map(Country::find()->all(), 'id', 'name'),
-                        'value' => 'country.name'
-                    ],
-                    [
-                        'format' => 'raw',
-                        'attribute' => 'year_start',
+                        'attribute' => 'small_img',
+                        'format' => 'html',
                         'value' => function($data) {
-                            return $data->year_start . ' - ' . $data->year_end;
+                            return Html::img($data->getImageurl($data->small_img), ['width' => '100']);
                         },
-                    ],
-                    [
-                        'format' => 'raw',
-                        'attribute' => 'director_list',
-                        'value' => function($data) {
-                            return $data->directors_url;
-                        },
-                    ],
-                    // 'year_end',
-                    // 'duration',
-                    'premiere',
-                    // 'preview',
-                    // 'description',
-                    // 'origin_img',
-                    // 'big_img',
-                    // 'uploader',
-                    // 'small_img',
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]);
-            ?>
-            <?php Pjax::end() ?>
+                            ],
+                            [
+                                'attribute' => 'big_img',
+                                'format' => 'html',
+                                'value' => function($data) {
+                                    return Html::img($data->getImageurl($data->big_img), ['width' => '100']);
+                                },
+                                    ],
+                                    [
+                                        'attribute' => 'country_id',
+                                        'format' => 'raw',
+                                        // 'label' => 'раса',
+                                        'filter' => ArrayHelper::map(Country::find()->all(), 'id', 'name'),
+                                        'value' => 'country.name'
+                                    ],
+                                    [
+                                        'format' => 'raw',
+                                        'attribute' => 'year_start',
+                                        'value' => function($data) {
+                                            return $data->year_start . ' - ' . $data->year_end;
+                                        },
+                                    ],
+                                    [
+                                        'format' => 'raw',
+                                        'attribute' => 'director_list',
+                                        'value' => function($data) {
+                                            return $data->directors_url;
+                                        },
+                                    ],
+                                    // 'year_end',
+                                    // 'duration',
+                                    'premiere',
+                                    // 'preview',
+                                    // 'description',
+                                    // 'origin_img',
+                                    // 'big_img',
+                                    // 'uploader',
+                                    // 'small_img',
+                                    ['class' => 'yii\grid\ActionColumn'],
+                                ],
+                            ]);
+                            ?>
+                        <?php Pjax::end() ?>
 </div>

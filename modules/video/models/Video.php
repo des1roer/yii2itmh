@@ -58,10 +58,11 @@ class Video extends \yii\db\ActiveRecord {
         ];
     }
 
-    public function getImageurl()
+    public function getImageurl($data = null)
     {
         // return your image url here
-        return \Yii::$app->request->BaseUrl . '/uploads/small_' . $this->origin_img;
+        //echo $arg; $data->getImageurl(342)
+        return \Yii::$app->request->BaseUrl . '/uploads/' . $data;
     }
 
     public function getDirectors_url()
