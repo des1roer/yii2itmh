@@ -2,8 +2,6 @@
 
 namespace app\modules\video\models;
 
-use Yii;
-
 /**
  * This is the model class for table "genre".
  *
@@ -12,7 +10,7 @@ use Yii;
  *
  * @property VideoHasGenre[] $videoHasGenres
  */
-class Genre extends \yii\db\ActiveRecord
+class Genre extends BaseModel
 {
     /**
      * @inheritdoc
@@ -22,34 +20,14 @@ class Genre extends \yii\db\ActiveRecord
         return 'genre';
     }
 
+    public function getVideo()
+    {
+        return $this->hasMany(Video::className(), ['id' => 'video_id'])
+                        ->viaTable('video_has_genre', ['genre_id' => 'id']);
+    }
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique']
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-        ];
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVideoHasGenres()
-    {
-        return $this->hasMany(VideoHasGenre::className(), ['genre_id' => 'id']);
-    }
 }

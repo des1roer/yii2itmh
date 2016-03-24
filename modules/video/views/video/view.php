@@ -42,7 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'format' => 'raw',
                 'attribute' => 'director_list',
-                'value' => $model->directors_url,
+                'value' => $model->getSubject_url('director'),
+            ],
+            [
+                'format' => 'raw',
+                'attribute' => 'actor_list',
+                'value' => $model->getSubject_url('actor'),
+            ],
+            [
+                'format' => 'raw',
+                'attribute' => 'genre_list',
+                'value' => $model->getSubject_url('genre'),
             ],
             [
                 'attribute' => 'origin_img',

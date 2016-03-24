@@ -53,7 +53,7 @@ class Video extends \yii\db\ActiveRecord {
             [['origin_img'], 'unique'],
             [['small_img'], 'unique'],
             [['big_img'], 'unique'],
-            [['director_list'], 'safe'],
+            [['director_list', 'actor_list', 'genre_list'], 'safe'],
             [['origin_img', 'big_img', 'small_img'], 'file'],
         ];
     }
@@ -65,21 +65,33 @@ class Video extends \yii\db\ActiveRecord {
         return \Yii::$app->request->BaseUrl . '/uploads/' . $data;
     }
 
-    public function getDirectors_url()
+    public function getSubject_url($class)
     {
-        $directors = $this->directors;
-        for ($i = 0; $i <= count($directors); $i++)
+        $classes = $this->$class;
+        for ($i = 0; $i <= count($classes); $i++)
         {
-            if (!empty($directors[$i]['name']))
-                $director[] = Html::a($directors[$i]['name'], ['/video/director/view', 'id' => $directors[$i]['id'],], ['class' => 'btn btn-link']);
+            if (!empty($classes[$i]['name']))
+                $class_[] = Html::a($classes[$i]['name'], ['/video/' . $class . '/view', 'id' => $classes[$i]['id'],], ['class' => 'btn btn-link']);
         }
-        return ($director) ? implode($director) : '';
+        return ($class_) ? implode($class_) : '';
     }
 
-    public function getDirectors()
+    public function getDirector()
     {
         return $this->hasMany(Director::className(), ['id' => 'director_id'])
                         ->viaTable('director_has_video', ['video_id' => 'id']);
+    }
+
+    public function getActor()
+    {
+        return $this->hasMany(Actor::className(), ['id' => 'actor_id'])
+                        ->viaTable('actor_has_video', ['video_id' => 'id']);
+    }
+
+    public function getGenre()
+    {
+        return $this->hasMany(Genre::className(), ['id' => 'genre_id'])
+                        ->viaTable('video_has_genre', ['video_id' => 'id']);
     }
 
     public function behaviors()
@@ -90,6 +102,8 @@ class Video extends \yii\db\ActiveRecord {
                 'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
                 'relations' => [
                     'director_list' => 'directors',
+                    'actor_list' => 'actors',
+                    'genre_list' => 'genres'
                 ],
             ],
         ];
@@ -122,33 +136,9 @@ class Video extends \yii\db\ActiveRecord {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getActorHasVideos()
-    {
-        return $this->hasMany(ActorHasVideo::className(), ['video_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDirectorHasVideos()
-    {
-        return $this->hasMany(DirectorHasVideo::className(), ['video_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getCountry()
     {
         return $this->hasOne(Country::className(), ['id' => 'country_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getVideoHasGenres()
-    {
-        return $this->hasMany(VideoHasGenre::className(), ['video_id' => 'id']);
     }
 
     public function beforeSave($insert)
@@ -156,8 +146,8 @@ class Video extends \yii\db\ActiveRecord {
         if (parent::beforeSave($insert))
         {
 
-              if ($this->premiere)
-            $this->premiere = date('Y-m-d', strtotime($this->premiere));
+            if ($this->premiere)
+                $this->premiere = date('Y-m-d', strtotime($this->premiere));
 
             return true;
         }

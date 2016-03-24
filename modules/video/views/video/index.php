@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'format' => 'raw',
                                         'attribute' => 'director_list',
                                         'value' => function($data) {
-                                            return $data->directors_url;
+                                            return $data->getSubject_url('director');
                                         },
                                     ],
                                     // 'year_end',

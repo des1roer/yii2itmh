@@ -2,7 +2,6 @@
 
 namespace app\modules\video\models;
 
-use Yii;
 
 /**
  * This is the model class for table "actor".
@@ -12,7 +11,7 @@ use Yii;
  *
  * @property ActorHasVideo[] $actorHasVideos
  */
-class Actor extends \yii\db\ActiveRecord
+class Actor extends BaseModel
 {
     /**
      * @inheritdoc
@@ -22,28 +21,17 @@ class Actor extends \yii\db\ActiveRecord
         return 'actor';
     }
     
+    
+    public function getVideo()
+    {
+        return $this->hasMany(Video::className(), ['id' => 'video_id'])
+                        ->viaTable('actor_has_video', ['actor_id' => 'id']);
+    }
+    
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique']
-        ];
-    }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-        ];
-    }
 
     /**
      * @return \yii\db\ActiveQuery

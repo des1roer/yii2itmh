@@ -27,6 +27,7 @@ $config = [
         'request' => [
 // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'S51X9l62nn_24iz05aB1p3Gf4Ml5q2dx',
+            'baseUrl'=> '',
         ],
         'image' =>
         [
