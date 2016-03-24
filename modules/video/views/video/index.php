@@ -8,6 +8,7 @@ use app\modules\video\models\Country;
 use yii\widgets\Pjax;
 use app\helpers\ImageResizeHelper;
 
+use app\modules\video\models\Video;
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\video\models\VideoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -19,7 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 <?php // echo $this->render('_search', ['model' => $searchModel]);   ?>
-
+<?php
+//$model = new Video;
+   //$res =  ArrayHelper::map($model::find()->all(), 'id', 'name');
+   //echo '<pre>';
+//$res = $model::findOne(['name'=>'asdas'])->name;
+  //      var_dump($res);
+?>
     <p>
     <?= Html::a('Create Video', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

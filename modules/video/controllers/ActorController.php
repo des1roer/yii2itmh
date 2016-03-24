@@ -12,8 +12,8 @@ use yii\filters\VerbFilter;
 /**
  * ActorController implements the CRUD actions for Actor model.
  */
-class ActorController extends Controller
-{
+class ActorController extends Controller {
+
     public function behaviors()
     {
         return [
@@ -36,8 +36,8 @@ class ActorController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,7 +49,7 @@ class ActorController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -62,11 +62,14 @@ class ActorController extends Controller
     {
         $model = new Actor();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else
+        {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -81,11 +84,14 @@ class ActorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        }
+        else
+        {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -112,10 +118,14 @@ class ActorController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Actor::findOne($id)) !== null) {
+        if (($model = Actor::findOne($id)) !== null)
+        {
             return $model;
-        } else {
+        }
+        else
+        {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

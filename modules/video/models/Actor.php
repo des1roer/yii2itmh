@@ -21,7 +21,7 @@ class Actor extends \yii\db\ActiveRecord
     {
         return 'actor';
     }
-
+    
     /**
      * @inheritdoc
      */

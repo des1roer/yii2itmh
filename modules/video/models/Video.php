@@ -151,6 +151,19 @@ class Video extends \yii\db\ActiveRecord {
         return $this->hasMany(VideoHasGenre::className(), ['video_id' => 'id']);
     }
 
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert))
+        {
+
+              if ($this->premiere)
+            $this->premiere = date('Y-m-d', strtotime($this->premiere));
+
+            return true;
+        }
+        return false;
+    }
+
     public function afterFind()
     {
         if ($this->premiere)

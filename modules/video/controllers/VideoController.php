@@ -71,11 +71,9 @@ class VideoController extends Controller {
         $model = new Video();
 
         if ($model->load(Yii::$app->request->post()))
-        {
+        {            
             $file = UploadedFile::getInstance($model, 'origin_img');
-            if ($model->premiere)
-                $model->premiere = date('Y-m-d', strtotime($model->premiere));
-
+          
             if (!empty($file))
             {
                 $filename = uniqid() . '.' . $file->extension;
@@ -114,8 +112,6 @@ class VideoController extends Controller {
 
         if ($model->load(Yii::$app->request->post()))
         {
-            if ($model->premiere)
-                $model->premiere = date('Y-m-d', strtotime($model->premiere));
 
             $file = UploadedFile::getInstance($model, 'origin_img');
             if (isset($file))

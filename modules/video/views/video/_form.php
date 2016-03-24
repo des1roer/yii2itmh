@@ -8,7 +8,6 @@ use app\modules\video\models\Country;
 use dosamigos\datepicker\DatePicker;
 use dosamigos\datepicker\DateRangePicker;
 use yii\helpers\Url;
-use Intervention\Image\ImageManagerStatic as Image;
 /* @var $this yii\web\View */
 /* @var $model app\modules\video\models\Video */
 /* @var $form yii\widgets\ActiveForm */
@@ -60,7 +59,6 @@ use Intervention\Image\ImageManagerStatic as Image;
     //  $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
            //         echo Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.'56f120b65cd28.png';  
     ?>
-    <?php echo Yii::$app->urlManager->createAbsoluteUrl('uploads').'/';  echo 232;?>
     <?=
     $form->field($model, 'premiere')->widget(
             DatePicker::className(), [
