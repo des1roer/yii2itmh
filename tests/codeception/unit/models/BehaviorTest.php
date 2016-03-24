@@ -59,10 +59,19 @@ class BehaviorTest extends \yii\codeception\DbTestCase {
                 'origin_name' => $param,
                 'director_list' => [ 1, 2, 3],
                 'premiere' => '29.03.2016',
+                
             ],
         ];
         codecept_debug($post);
         $this->saveAndDelete(new Video, $post, $param);
     }
-
+    
+    public function testUpload()
+    {
+        $file = new \yii\web\UploadedFile(['name' => 'Screenshot_25.png', 'tempName' => 'data/Screenshot_25.png', 'type' => 'image/png']);
+        $path = 'data/Screenshot_25.png';
+        $this->assertFileExists($path, 'есть файл');
+        //$this->assertTrue($file->saveAs($path), 'Save model');
+        codecept_debug($file);
+    }
 }

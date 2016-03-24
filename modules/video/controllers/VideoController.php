@@ -71,7 +71,9 @@ class VideoController extends Controller {
         $model = new Video();
 
         if ($model->load(Yii::$app->request->post()))
-        {            
+        {   
+           //     echo '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><pre>';
+           // var_dump($model);
             $file = UploadedFile::getInstance($model, 'origin_img');
           
             if (!empty($file))
@@ -112,7 +114,7 @@ class VideoController extends Controller {
 
         if ($model->load(Yii::$app->request->post()))
         {
-
+        
             $file = UploadedFile::getInstance($model, 'origin_img');
             if (isset($file))
             {
