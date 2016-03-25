@@ -3,7 +3,8 @@
 use yii\db\Migration;
 
 class m160321_081027_create_video extends Migration {
-/*https://github.com/yiisoft/yii2/blob/master/docs/guide-ru/db-migrations.md*/
+    /* https://github.com/yiisoft/yii2/blob/master/docs/guide-ru/db-migrations.md */
+
     public function up()
     {
         $this->createTable('country', [
@@ -34,9 +35,9 @@ class m160321_081027_create_video extends Migration {
             'name' => $this->string('255')->notNull()->unique(),
         ]);
         $this->createTable('video_has_genre', [
-            'id' => $this->primaryKey(),
             'video_id' => $this->integer(),
             'genre_id' => $this->integer(),
+            'PRIMARY KEY(video_id, genre_id)'
         ]);
 
         $this->createIndex('idx-video_id', 'video_has_genre', 'video_id');
@@ -50,9 +51,9 @@ class m160321_081027_create_video extends Migration {
             'name' => $this->string('255')->notNull()->unique(),
         ]);
         $this->createTable('director_has_video', [
-            'id' => $this->primaryKey(),
             'director_id' => $this->integer(),
             'video_id' => $this->integer(),
+            'PRIMARY KEY(video_id, director_id)'
         ]);
 
         $this->createIndex('idx-director_id', 'director_has_video', 'director_id');
@@ -66,9 +67,9 @@ class m160321_081027_create_video extends Migration {
             'name' => $this->string('255')->notNull()->unique(),
         ]);
         $this->createTable('actor_has_video', [
-            'id' => $this->primaryKey(),
             'actor_id' => $this->integer(),
             'video_id' => $this->integer(),
+            'PRIMARY KEY(video_id, actor_id)'
         ]);
 
         $this->createIndex('idx-actor_id', 'actor_has_video', 'actor_id');

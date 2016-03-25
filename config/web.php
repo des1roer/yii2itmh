@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 $mail = require(__DIR__ . '/local_mail.php');
 $db = require(__DIR__ . '/db.php');
 
-$test = true;
+//$test = true;
 $db = ($test) ? $db['test'] : $db['prod'];
 
 $config = [

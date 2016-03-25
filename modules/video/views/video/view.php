@@ -14,6 +14,29 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Videos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div id='trailer'>
+  <?php  
+  if ($model->trailer)
+  {
+  echo \wbraganca\videojs\VideoJsWidget::widget([
+        'options' => [
+            'class' => 'video-js vjs-default-skin vjs-big-play-centered',
+            'poster' => $model->getImageurl($model->big_img),
+            'controls' => true,
+            'preload' => 'auto',
+            'width' => '970',
+            'height' => '400',
+        ],
+        'tags' => [
+            'source' => [
+                ['src' => $model->getImageurl($model->trailer), 'type' => 'video/mp4'],
+            ],            
+        ]
+    ]);  
+  }
+  
+  //echo $model->trailer; ?>
+</div>
 <div class="video-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -58,16 +81,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'genre_list',
                 'value' => $model->getSubject_url('genre'),
             ],
-            [
+            /*[
                 'attribute' => 'origin_img',
                 'format' => 'html',
                 'value' => Html::img($model->getImageurl($model->origin_img), ['width' => '100']),
-            ],
+            ],*/
             'duration',
             'premiere',
             'preview',
             'description',         
             ['attribute' => 'uploader', 'value' => User::findIdentity($model->uploader)->username],
+        
         ],
     ])
     ?>

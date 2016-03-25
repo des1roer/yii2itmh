@@ -53,7 +53,9 @@ class Video extends BaseModel {
             [['small_img'], 'unique'],
             [['big_img'], 'unique'],
             [['director_list', 'actor_list', 'genre_list'], 'safe'],
-            [['origin_img', 'big_img', 'small_img'], 'file'],
+            [['origin_img', 'big_img', 'small_img'], 'file', 'extensions' => 'png, jpg', 'maxSize'=>1024 * 1024 * 5],
+            [['trailer'], 'file', 'extensions' => 'mp4', 'maxSize'=>1024 * 1024 * 50],
+            
         ];
     }
 
@@ -119,7 +121,8 @@ class Video extends BaseModel {
             'uploader' => 'Загрузил',
             'director_list' => 'Режиссёры',
             'actor_list' => 'Актёры',
-            'genre_list' => 'Жанры'
+            'genre_list' => 'Жанры',
+            'trailer' => 'Трейлер'
         ];
     }
 
@@ -150,4 +153,5 @@ class Video extends BaseModel {
             $this->premiere = date('d.m.Y', strtotime($this->premiere));
     }
 
+    
 }

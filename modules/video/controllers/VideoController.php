@@ -80,7 +80,6 @@ class VideoController extends DefaultController {
             {
                 $filename = uniqid() . '.' . $file->extension;
                 $path = 'uploads/' . $filename;
-
                 if ($file->saveAs($path))
                 {
                     $model->origin_img = $filename;
@@ -91,6 +90,19 @@ class VideoController extends DefaultController {
                     $model->big_img = 'big_' . $filename;
                 }
             }
+            
+            
+            $file = UploadedFile::getInstance($model, 'trailer');
+            if (!empty($file))
+            {
+                $filename = uniqid() . '.' . $file->extension;
+                $path = 'uploads/' . $filename;
+                if ($file->saveAs($path))
+                {
+                    $model->trailer = $filename;
+                }
+            }
+            
             if ($model->save())
             {
                 return $this->redirect(['index']);
@@ -115,7 +127,11 @@ class VideoController extends DefaultController {
     {
         $model = $this->findModel($id);
         $oldFile = 'uploads/' . $model->origin_img;
-
+        $oldTrailer = 'uploads/' . $model->trailer;
+        
+        $oldFile_name = $model->origin_img;
+        $oldTrailer_name = $model->trailer;
+        
         if ($model->load(Yii::$app->request->post()))
         {
 
@@ -124,9 +140,9 @@ class VideoController extends DefaultController {
             {
                 if (file_exists($oldFile))
                 {
-                    @unlink('uploads/' . $model->origin_img);
-                    @unlink('uploads/' . $model->small_img);
-                    @unlink('uploads/' . $model->big_img);
+                    @unlink('uploads/' . $oldFile_name);
+                    @unlink('uploads/small_' . $oldFile_name);
+                    @unlink('uploads/big_' . $oldFile_name);
                 }
                 $filename = uniqid() . '.' . $file->extension;
                 $path = 'uploads/' . $filename;
@@ -140,7 +156,28 @@ class VideoController extends DefaultController {
                     $model->big_img = 'big_' . $filename;
                 }
             }
-
+           else 
+                $model->origin_img = $oldFile_name;
+            
+        
+      
+            $file = UploadedFile::getInstance($model, 'trailer');
+            if (isset($file))
+            {
+                if (file_exists($oldTrailer))
+                {
+                    @unlink('uploads/' . $oldTrailer_name);
+                }
+                $filename = uniqid() . '.' . $file->extension;
+                $path = 'uploads/' . $filename;
+                if ($file->saveAs($path))
+                {
+                    $model->trailer = $filename;
+                }
+            }
+            else 
+                $model->trailer = $oldTrailer_name;
+            
             if ($model->save())
             {
                 return $this->redirect(['index']);
@@ -168,6 +205,7 @@ class VideoController extends DefaultController {
         @unlink('uploads/' . $model->origin_img);
         @unlink('uploads/' . $model->small_img);
         @unlink('uploads/' . $model->big_img);
+        @unlink('uploads/' . $model->trailer);
         $model->delete();
         return $this->redirect(['index']);
     }

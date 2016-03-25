@@ -10,6 +10,7 @@ use app\modules\video\models\Country;
 use dosamigos\datepicker\DatePicker;
 use dosamigos\datepicker\DateRangePicker;
 use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\video\models\Video */
 /* @var $form yii\widgets\ActiveForm */
@@ -47,14 +48,15 @@ use yii\helpers\Url;
             $form->field($model, 'actor_list')
             ->dropDownList(ArrayHelper::map(Actor::find()->all(), 'id', 'name'), ['multiple' => true])
     ?>
-        <?=
+    <?=
             $form->field($model, 'genre_list')
             ->dropDownList(ArrayHelper::map(Genre::find()->all(), 'id', 'name'), ['multiple' => true])
     ?>
     <?= $form->field($model, 'duration')->textInput() ?>
 
 
-    <?php /*
+    <?php
+    /*
       DatePicker::widget([
       'model' => $model,
       'attribute' => 'premiere',
@@ -64,9 +66,9 @@ use yii\helpers\Url;
       'format' => 'dd-M-yyyy'
       ]
       ]); */
-   // $filename = '56f120b65cd28.png';
+    // $filename = '56f120b65cd28.png';
     //  $img = Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.$filename)->resize(100, 145)->save(Yii::$app->getBasePath().DIRECTORY_SEPARATOR.'web'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'small_'. $filename);
-           //         echo Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.'56f120b65cd28.png';  
+    //         echo Yii::$app->urlManager->createAbsoluteUrl('uploads') .'/'.'56f120b65cd28.png';  
     ?>
     <?=
     $form->field($model, 'premiere')->widget(
@@ -86,9 +88,15 @@ use yii\helpers\Url;
 
     <?= $form->field($model, 'description')->textArea(['rows' => 6, 'maxlength' => true]) ?>
 
-    <?= $form->field($model, 'origin_img')->fileInput() ?>
-    <?php echo ($model->origin_img) ? Html::img('/uploads/' . $model->origin_img, ['width' => 100, 'height' => 100]) : null ?>
+    <?=
+    $form->field($model, 'origin_img')->fileInput(['accept' => 'image/*'])
+    ?>
+    <?= ($model->origin_img) ? Html::img('/uploads/' . $model->origin_img, ['width' => 100, 'height' => 100]) : null ?>
 
+    <?=
+    $form->field($model, 'trailer')->fileInput(['accept' => 'video/*'])
+    ?>
+    <?= ($model->trailer) ? 'Трейлер загружен' : null ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
