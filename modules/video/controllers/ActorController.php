@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ActorController implements the CRUD actions for Actor model.
  */
-class ActorController extends Controller {
+class ActorController extends DefaultController {
 
     public function behaviors()
     {

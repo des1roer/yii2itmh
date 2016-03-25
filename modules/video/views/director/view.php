@@ -32,12 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            [ 
+            [
                 'format' => 'raw',
                 'attribute' => 'video_list',
-                'value' => $model->getSubject_url('video'),
-                
-                ],
+                'value' => $model->subject_url,
+            ],
         ],
     ])
     ?>

@@ -16,18 +16,39 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'amnah\yii2\user\Module',
-       
         // set custom module properties here ...
         ],
         'video' => [
             'class' => 'app\modules\video\Module',
         ],
+        /* 'controllerMap' => [
+          'default' => 'app\controllers\UserController',
+          ], */
+        /*'video' => [
+            'class' => 'app\modules\video',
+            'as access' => [ // if you need to set access
+                'class' => 'yii\filters\AccessControl',
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'] // all auth users
+                    ],
+                ]
+            ],
+        ],*/
     ],
-    'components' => [       
+    'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [ //I:\OpenServer\domains\yii2itmh\vendor\amnah\yii2-user\views\default\login.php
+                    '@vendor/amnah/yii2-user/views' => '@app/views/user',
+                ],
+            ],
+        ],
         'request' => [
 // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'S51X9l62nn_24iz05aB1p3Gf4Ml5q2dx',
-            'baseUrl'=> '',
+            'baseUrl' => '',
         ],
         'image' =>
         [
@@ -63,7 +84,7 @@ $config = [
           'useFileTransport' => FALSE,
           'transport' => $mail['mail'],
           ], */
-        
+
         // 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

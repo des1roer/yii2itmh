@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\helpers\ArrayHelper;
 use app\modules\video\models\Director;
 use app\modules\video\models\Country;
+use amnah\yii2\user\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\video\models\Video */
@@ -37,8 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'origin_name',
             ['attribute' => 'country_id', 'value' => $model->country->name,],
-            'year_start',
-            'year_end',
+            [
+                'format' => 'raw',
+                'attribute' => 'year_start',
+                'value' => $model->year_start . ' - ' . $model->year_end,
+            ],
             [
                 'format' => 'raw',
                 'attribute' => 'director_list',
@@ -56,16 +60,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'origin_img',
-                'value' => $model->imageurl,
-                'format' => ['image', ['width' => '100', 'height' => '100']],
+                'format' => 'html',
+                'value' => Html::img($model->getImageurl($model->origin_img), ['width' => '100']),
             ],
             'duration',
             'premiere',
             'preview',
-            'description',
-            'big_img',
-            'uploader',
-            'small_img',
+            'description',         
+            ['attribute' => 'uploader', 'value' => User::findIdentity($model->uploader)->username],
         ],
     ])
     ?>

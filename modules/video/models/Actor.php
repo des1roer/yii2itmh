@@ -27,17 +27,4 @@ class Actor extends BaseModel
         return $this->hasMany(Video::className(), ['id' => 'video_id'])
                         ->viaTable('actor_has_video', ['actor_id' => 'id']);
     }
-    
-    /**
-     * @inheritdoc
-     */
-
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getActorHasVideos()
-    {
-        return $this->hasMany(ActorHasVideo::className(), ['actor_id' => 'id']);
-    }
 }

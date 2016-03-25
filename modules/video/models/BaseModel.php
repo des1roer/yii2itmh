@@ -15,9 +15,10 @@ use yii\helpers\Html;
  */
 class BaseModel extends \yii\db\ActiveRecord {
 
-    public function getSubject_url($class)
+    public function getSubject_url($class = NULL)
     {
-        $classes = $this->video;
+        if (empty($class)) $class = 'video';
+        $classes = $this->$class;
         for ($i = 0; $i <= count($classes); $i++)
         {
             if (!empty($classes[$i]['name']))
@@ -35,7 +36,8 @@ class BaseModel extends \yii\db\ActiveRecord {
             [['video_list'], 'safe'],
         ];
     }
-        public function attributeLabels()
+
+    public function attributeLabels()
     {
         return [
             'id' => 'ID',

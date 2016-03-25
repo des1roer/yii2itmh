@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * GenreController implements the CRUD actions for Genre model.
  */
-class GenreController extends Controller
+class GenreController extends DefaultController
 {
     public function behaviors()
     {

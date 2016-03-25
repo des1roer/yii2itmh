@@ -1,3 +1,56 @@
+###
+```php
+git clone https://github.com/des1roer/yii2itmh.git
+
+composer global require "fxp/composer-asset-plugin:~1.1.1"
+composer update --prefer-dist
+
+создать базу itmh и itmh_tests 
+настроить подключение в I:\OpenServer\domains\yii2itmh\config\db.php
+
+создать таблицы yii migrate\up
+
+пароль админа по умолчанию админ: admin\root, пользователь user\neo 
+
+для тестов 
+
+yii2itmh\config\web.php указать $test = true;
+
+командой из папки   \tests\codeception\bin
+
+php  yii migrate
+
+Запуск из папки tests
+
+php path\to\vendor\codeception\codeception\codecept run unit
+
+либо скопировать и установить права на запись
+```
+
+настройки Apache (CentOS)
+
+\etc\httpd\sites-available\yii2itmh.conf
+
+```
+<VirtualHost *:80>
+#    Options +FollowSymlinks
+#    Options -Indexes
+#    DirectoryIndex index.php
+#    RewriteEngine on
+    # if a directory or a file exists, use it directly
+#    RewriteCond %{REQUEST_FILENAME} !-f
+#    RewriteCond %{REQUEST_FILENAME} !-d
+    # otherwise forward it to index.php
+#    RewriteRule . index.php
+    ServerName yii2itmh
+    DocumentRoot /var/www/yii2itmh/web
+    ServerAlias yii2itmh
+    ErrorLog /var/log/httpd/yii2itmh_error.log
+    CustomLog /var/log/httpd/yii2itmh_access.log combined
+</VirtualHost>
+```
+
+
 Yii 2 Basic Project Template
 ============================
 
@@ -102,51 +155,3 @@ return [
 - Refer to the README in the `tests` directory for information specific to basic application tests.
 
 
-###
-```php
-git clone https://github.com/des1roer/yii2itmh.git
-
-composer global require "fxp/composer-asset-plugin:~1.1.1"
-composer update --prefer-dist
-
-создать базу itmh и itmh_tests
-
-yii migrate\up
-
-для тестов 
-
-yii2itmh\config\web.php указать $test = true;
-
-командой из папки   \tests\codeception\bin
-
-php  yii migrate
-
-Запуск из папки tests
-
-php path\to\vendor\codeception\codeception\codecept run
-
-либо скопировать и уставновить права на запись
-```
-
-настройки Apache (CentOS)
-
-\etc\httpd\sites-available\yii2itmh.conf
-
-```
-<VirtualHost *:80>
-#    Options +FollowSymlinks
-#    Options -Indexes
-#    DirectoryIndex index.php
-#    RewriteEngine on
-    # if a directory or a file exists, use it directly
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteCond %{REQUEST_FILENAME} !-d
-    # otherwise forward it to index.php
-#    RewriteRule . index.php
-    ServerName yii2itmh.vgok.ru
-    DocumentRoot /var/www/yii2itmh.ru/web
-    ServerAlias yii2itmh.ru
-    ErrorLog /var/log/httpd/yii2itmh_error.log
-    CustomLog /var/log/httpd/yii2itmh_access.log combined
-</VirtualHost>
-```

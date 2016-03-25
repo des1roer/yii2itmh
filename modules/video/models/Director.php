@@ -30,17 +30,4 @@ class Director extends BaseModel { //\yii\db\ActiveRecord {
                         ->viaTable('director_has_video', ['director_id' => 'id']);
     }
 
-    public function behaviors()
-    {
-        return [
-
-            [
-                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
-                'relations' => [
-                    'video_list' => 'videos',
-                ],
-            ],
-        ];
-    }
-
 }

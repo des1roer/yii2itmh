@@ -3,7 +3,6 @@
 namespace app\modules\video\models;
 
 use Yii;
-use yii\helpers\Html;
 
 /**
  * This is the model class for table "video".
@@ -28,7 +27,7 @@ use yii\helpers\Html;
  * @property Country $country
  * @property VideoHasGenre[] $videoHasGenres
  */
-class Video extends \yii\db\ActiveRecord {
+class Video extends BaseModel {
 
     /**
      * @inheritdoc
@@ -65,17 +64,6 @@ class Video extends \yii\db\ActiveRecord {
         return \Yii::$app->request->BaseUrl . '/uploads/' . $data;
     }
 
-    public function getSubject_url($class)
-    {
-        $classes = $this->$class;
-        for ($i = 0; $i <= count($classes); $i++)
-        {
-            if (!empty($classes[$i]['name']))
-                $class_[] = Html::a($classes[$i]['name'], ['/video/' . $class . '/view', 'id' => $classes[$i]['id'],], ['class' => 'btn btn-link']);
-        }
-        return ($class_) ? implode($class_) : '';
-    }
-
     public function getDirector()
     {
         return $this->hasMany(Director::className(), ['id' => 'director_id'])
@@ -101,9 +89,9 @@ class Video extends \yii\db\ActiveRecord {
             [
                 'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
                 'relations' => [
-                    'director_list' => 'directors',
-                    'actor_list' => 'actors',
-                    'genre_list' => 'genres'
+                    'director_list' => 'director',
+                    'actor_list' => 'actor',
+                    'genre_list' => 'genre'
                 ],
             ],
         ];
@@ -126,10 +114,12 @@ class Video extends \yii\db\ActiveRecord {
             'preview' => 'Анонс',
             'description' => 'Описание',
             'origin_img' => 'Афиша',
-            'small_img' => 'small_img',
-            'big_img' => 'big_img',
-            'uploader' => 'Uploader',
-            'director_list' => 'Режиссёр',
+            'small_img' => 'Миниатюра',
+            'big_img' => '150x218',
+            'uploader' => 'Загрузил',
+            'director_list' => 'Режиссёры',
+            'actor_list' => 'Актёры',
+            'genre_list' => 'Жанры'
         ];
     }
 
@@ -145,10 +135,10 @@ class Video extends \yii\db\ActiveRecord {
     {
         if (parent::beforeSave($insert))
         {
-
             if ($this->premiere)
                 $this->premiere = date('Y-m-d', strtotime($this->premiere));
 
+            $this->uploader = Yii::$app->user->identity->id;
             return true;
         }
         return false;

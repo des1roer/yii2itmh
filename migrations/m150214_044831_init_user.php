@@ -3,8 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m150214_044831_init_user extends Migration
-{
+class m150214_044831_init_user extends Migration {
 
     public function safeUp()
     {
@@ -89,21 +88,31 @@ class m150214_044831_init_user extends Migration
         $security = Yii::$app->security;
         $columns = ['role_id', 'email', 'username', 'password', 'status', 'created_at', 'access_token', 'auth_key'];
         $this->batchInsert('{{%user}}', $columns, [
-            /*[
-                1, // Role::ROLE_ADMIN
-                'neo@neo.com',
-                'neo',
-                '$2y$13$dyVw4WkZGkABf2UrGWrhHO4ZmVBv.K4puhOL59Y9jQhIdj63TlV.O', // neo
-                1, // User::STATUS_ACTIVE
-                gmdate('Y-m-d H:i:s'),
-                $security->generateRandomString(),
-                $security->generateRandomString(),
-            ],*/
+            /* [
+              1, // Role::ROLE_ADMIN
+              'neo@neo.com',
+              'neo',
+              '$2y$13$dyVw4WkZGkABf2UrGWrhHO4ZmVBv.K4puhOL59Y9jQhIdj63TlV.O', // neo
+              1, // User::STATUS_ACTIVE
+              gmdate('Y-m-d H:i:s'),
+              $security->generateRandomString(),
+              $security->generateRandomString(),
+              ], */
             [
                 1, // Role::ROLE_ADMIN
                 'no@mail.ru',
                 'admin',
                 '$2y$13$d1jP7AvGG9TtdSEsS3NpJO4ccn99d/6ItIiAcUbfRA5OMAszdY3A.', // root
+                1, // User::STATUS_ACTIVE
+                gmdate('Y-m-d H:i:s'),
+                $security->generateRandomString(),
+                $security->generateRandomString(),
+            ],
+            [
+                2, // Role::ROLE_USER
+                'user@mail.ru',
+                'user',
+                '$2y$13$dyVw4WkZGkABf2UrGWrhHO4ZmVBv.K4puhOL59Y9jQhIdj63TlV.O', // neo
                 1, // User::STATUS_ACTIVE
                 gmdate('Y-m-d H:i:s'),
                 $security->generateRandomString(),

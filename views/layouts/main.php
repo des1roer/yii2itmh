@@ -26,7 +26,7 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'itmh',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -51,12 +51,12 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
+                    //['label' => 'Home', 'url' => ['/site/index']],
+                    //['label' => 'About', 'url' => ['/site/about']],
+                    //['label' => 'Contact', 'url' => ['/site/contact']],
                     ['label' => 'Admin', 'items' => [
-                            ['label' => 'Пользователи', 'url' => ['/user']],
-                            ['label' => 'Аккаунты', 'url' => ['/user/settings/account']],
+                            ['label' => 'API', 'url' => ['/user']],
+                            ['label' => 'Аккаунты', 'url' => ['/user/admin']],
                             ['label' => 'gii', 'url' => ['/gii']],
                         ], 'visible' => $isAdmin], // check if user is an admin 
                     ['label' => 'Video', 'items' => [
@@ -88,9 +88,9 @@ AppAsset::register($this);
 
         <footer class="footer">
             <div class="container">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+                <p class="pull-left">&copy; des1roer <?= date('Y') ?></p>
 
-                <p class="pull-right"><?= Yii::powered() ?></p>
+                
             </div>
         </footer>
 

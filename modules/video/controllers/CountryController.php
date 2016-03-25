@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * CountryController implements the CRUD actions for Country model.
  */
-class CountryController extends Controller
+class CountryController extends DefaultController
 {
 
     public function behaviors()

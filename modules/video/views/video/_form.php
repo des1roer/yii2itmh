@@ -14,7 +14,7 @@ use yii\helpers\Url;
 /* @var $model app\modules\video\models\Video */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<?= Yii::$app->session->getFlash('error'); ?>
 <div class="video-form">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>

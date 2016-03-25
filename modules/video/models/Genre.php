@@ -29,5 +29,12 @@ class Genre extends BaseModel
      * @inheritdoc
      */
 
-
+        public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Название',
+            'video_list' => 'Фильмы'
+        ];
+    }
 }

@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * DirectorController implements the CRUD actions for Director model.
  */
-class DirectorController extends Controller
+class DirectorController extends DefaultController
 {
     public function behaviors()
     {

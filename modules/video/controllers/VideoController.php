@@ -20,7 +20,7 @@ Image::configure(array('driver' => 'imagick'));
 /**
  * VideoController implements the CRUD actions for Video model.
  */
-class VideoController extends Controller {
+class VideoController extends DefaultController {
 
     public function behaviors()
     {
@@ -71,11 +71,11 @@ class VideoController extends Controller {
         $model = new Video();
 
         if ($model->load(Yii::$app->request->post()))
-        {   
-           //     echo '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><pre>';
-           // var_dump($model);
+        {
+            //     echo '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><pre>';
+            // var_dump($model);
             $file = UploadedFile::getInstance($model, 'origin_img');
-          
+
             if (!empty($file))
             {
                 $filename = uniqid() . '.' . $file->extension;
@@ -94,6 +94,10 @@ class VideoController extends Controller {
             if ($model->save())
             {
                 return $this->redirect(['index']);
+            }
+            else
+            {
+                \Yii::$app->getSession()->setFlash('error', 'Не удалось загрузить');
             }
         }
         return $this->render('create', [
@@ -114,7 +118,7 @@ class VideoController extends Controller {
 
         if ($model->load(Yii::$app->request->post()))
         {
-        
+
             $file = UploadedFile::getInstance($model, 'origin_img');
             if (isset($file))
             {
@@ -140,6 +144,10 @@ class VideoController extends Controller {
             if ($model->save())
             {
                 return $this->redirect(['index']);
+            }
+            else
+            {
+                \Yii::$app->getSession()->setFlash('error', 'Не удалось загрузить');
             }
         }
 
