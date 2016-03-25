@@ -16,16 +16,9 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'amnah\yii2\user\Module',
-        // set custom module properties here ...
         ],
         'video' => [
             'class' => 'app\modules\video\Module',
-        ],
-        /* 'controllerMap' => [
-          'default' => 'app\controllers\UserController',
-          ], */
-        /*'video' => [
-            'class' => 'app\modules\video',
             'as access' => [ // if you need to set access
                 'class' => 'yii\filters\AccessControl',
                 'rules' => [
@@ -35,7 +28,7 @@ $config = [
                     ],
                 ]
             ],
-        ],*/
+        ],
     ],
     'components' => [
         'view' => [
@@ -76,16 +69,6 @@ $config = [
             ],
             'transport' => $mail['mail'],
         ],
-        /* 'mailer' => [
-          'class' => 'yii\swiftmailer\Mailer',
-          // send all mails to a file by default. You have to set
-          // 'useFileTransport' to false and configure a transport
-          // for the mailer to send real emails.
-          'useFileTransport' => FALSE,
-          'transport' => $mail['mail'],
-          ], */
-
-        // 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
