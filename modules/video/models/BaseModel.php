@@ -36,6 +36,18 @@ class BaseModel extends \yii\db\ActiveRecord {
             [['video_list'], 'safe'],
         ];
     }
+    public function behaviors()
+    {
+        return [
+
+            [
+                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
+                'relations' => [
+                    'video_list' => 'video',
+                ],
+            ],
+        ];
+    }
 
     public function attributeLabels()
     {

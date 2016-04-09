@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class GenreController extends DefaultController
 {
+
     public function behaviors()
     {
         return [
@@ -36,8 +37,8 @@ class GenreController extends DefaultController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -49,7 +50,7 @@ class GenreController extends DefaultController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -62,13 +63,13 @@ class GenreController extends DefaultController
     {
         $model = new Genre();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('create', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -81,13 +82,13 @@ class GenreController extends DefaultController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('update', [
+                    'model' => $model,
+        ]);
     }
 
     /**
@@ -112,10 +113,13 @@ class GenreController extends DefaultController
      */
     protected function findModel($id)
     {
-        if (($model = Genre::findOne($id)) !== null) {
+        if (($model = Genre::findOne($id)) !== null)
+        {
             return $model;
-        } else {
+        } else
+        {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

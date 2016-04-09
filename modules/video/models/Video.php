@@ -3,6 +3,9 @@
 namespace app\modules\video\models;
 
 use Yii;
+use Intervention\Image\ImageManagerStatic as Image;
+
+Image::configure(array('driver' => 'imagick'));
 
 /**
  * This is the model class for table "video".
@@ -27,7 +30,8 @@ use Yii;
  * @property Country $country
  * @property VideoHasGenre[] $videoHasGenres
  */
-class Video extends BaseModel {
+class Video extends BaseModel
+{
 
     /**
      * @inheritdoc
@@ -53,9 +57,8 @@ class Video extends BaseModel {
             [['small_img'], 'unique'],
             [['big_img'], 'unique'],
             [['director_list', 'actor_list', 'genre_list'], 'safe'],
-            [['origin_img', 'big_img', 'small_img'], 'file', 'extensions' => 'png, jpg', 'maxSize'=>1024 * 1024 * 5],
-            [['trailer'], 'file', 'extensions' => 'mp4', 'maxSize'=>1024 * 1024 * 50],
-            
+            [['origin_img', 'big_img', 'small_img'], 'file', 'extensions' => 'png, jpg', 'maxSize' => 1024 * 1024 * 5],
+            [['trailer'], 'file', 'extensions' => 'mp4', 'maxSize' => 1024 * 1024 * 50],
         ];
     }
 
@@ -82,6 +85,14 @@ class Video extends BaseModel {
     {
         return $this->hasMany(Genre::className(), ['id' => 'genre_id'])
                         ->viaTable('video_has_genre', ['video_id' => 'id']);
+    }
+
+    public function saveImage($filename)
+    {
+        Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)
+                ->resize(100, 145)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'small_' . $filename);
+        Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)
+                ->resize(150, 218)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'big_' . $filename);
     }
 
     public function behaviors()
@@ -140,8 +151,8 @@ class Video extends BaseModel {
         {
             if ($this->premiere)
                 $this->premiere = date('Y-m-d', strtotime($this->premiere));
-
-            $this->uploader = Yii::$app->user->identity->id;
+            if (!empty (Yii::$app->user->identity->id))
+                $this->uploader = Yii::$app->user->identity->id;
             return true;
         }
         return false;
@@ -153,5 +164,4 @@ class Video extends BaseModel {
             $this->premiere = date('d.m.Y', strtotime($this->premiere));
     }
 
-    
 }

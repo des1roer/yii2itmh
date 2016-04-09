@@ -32,6 +32,7 @@ class BehaviorTest extends \yii\codeception\DbTestCase {
     // tests
     public function testMigration()
     {
+        //проверяем применены ли миграции
         $this->assertNotEmpty($this->notEmpty(new Actor), 'Model Actor not empty');
         $this->assertNotEmpty($this->notEmpty(new Director), 'Model Director not empty');
         $this->assertNotEmpty($this->notEmpty(new Genre), 'Model Genre not empty');
@@ -40,6 +41,7 @@ class BehaviorTest extends \yii\codeception\DbTestCase {
 
     public function testVideo()
     {
+        //пробуем загрузить и удалить данные
         $param = uniqid();
         $post = ['Actor' =>
             ['name' => $param],
@@ -65,13 +67,5 @@ class BehaviorTest extends \yii\codeception\DbTestCase {
         codecept_debug($post);
         $this->saveAndDelete(new Video, $post, $param);
     }
-    
-    public function testUpload()
-    {
-        $file = new \yii\web\UploadedFile(['name' => 'Screenshot_25.png', 'tempName' => 'data/Screenshot_25.png', 'type' => 'image/png']);
-        $path = 'data/Screenshot_25.png';
-        $this->assertFileExists($path, 'есть файл');
-        //$this->assertTrue($file->saveAs($path), 'Save model');
-        codecept_debug($file);
-    }
+
 }

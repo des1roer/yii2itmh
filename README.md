@@ -1,6 +1,6 @@
 ###
 ```php
-git clone https://github.com/des1roer/yii2itmh.git
+git clone https://github.com/des1roer/yii2itmh.git .
 
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer update --prefer-dist
@@ -22,7 +22,7 @@ php  yii migrate
 
 Запуск из папки tests
 
-php path\to\vendor\codeception\codeception\codecept run unit
+php path\to\vendor\codeception\codeception\codecept run unit --debug
 
 либо скопировать и установить права на запись
 ```

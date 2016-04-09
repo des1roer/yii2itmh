@@ -12,10 +12,9 @@ use yii\web\UploadedFile;
 // include composer autoload
 //use yii\helpers\Html;
 // import the Intervention Image Manager Class
-use Intervention\Image\ImageManagerStatic as Image;
 
 // configure with favored image driver (gd by default)
-Image::configure(array('driver' => 'imagick'));
+
 
 /**
  * VideoController implements the CRUD actions for Video model.
@@ -72,8 +71,6 @@ class VideoController extends DefaultController {
 
         if ($model->load(Yii::$app->request->post()))
         {
-            //     echo '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><pre>';
-            // var_dump($model);
             $file = UploadedFile::getInstance($model, 'origin_img');
 
             if (!empty($file))
@@ -83,9 +80,9 @@ class VideoController extends DefaultController {
                 if ($file->saveAs($path))
                 {
                     $model->origin_img = $filename;
-                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(100, 145)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'small_' . $filename);
-                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(150, 218)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'big_' . $filename);
-
+                    
+                    $model->saveImage($filename);
+            
                     $model->small_img = 'small_' . $filename;
                     $model->big_img = 'big_' . $filename;
                 }
@@ -149,9 +146,7 @@ class VideoController extends DefaultController {
                 if ($file->saveAs($path))
                 {
                     $model->origin_img = $filename;
-                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(100, 145)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'small_' . $filename);
-                    Image::make(Yii::$app->urlManager->createAbsoluteUrl('uploads') . '/' . $filename)->resize(150, 218)->save(Yii::$app->getBasePath() . DIRECTORY_SEPARATOR . 'web' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'big_' . $filename);
-
+                    $model->saveImage($filename);
                     $model->small_img = 'small_' . $filename;
                     $model->big_img = 'big_' . $filename;
                 }
