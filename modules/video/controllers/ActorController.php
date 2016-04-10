@@ -65,13 +65,10 @@ class ActorController extends DefaultController {
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
             return $this->redirect(['view', 'id' => $model->id]);
-        }
-        else
-        {
+        }      
             return $this->render('create', [
                         'model' => $model,
-            ]);
-        }
+            ]);       
     }
 
     /**
@@ -88,12 +85,10 @@ class ActorController extends DefaultController {
         {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        else
-        {
             return $this->render('update', [
                         'model' => $model,
             ]);
-        }
+        
     }
 
     /**
